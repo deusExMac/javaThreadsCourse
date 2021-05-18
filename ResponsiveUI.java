@@ -48,19 +48,31 @@ public void start(Stage stage) {
 
 
 
+/**
+ ** Setting up the task to be executed as a separate thread.
+ ** Uses lambda expressions to setup the method to be executed
+ ** inside the thread.
+ **
+ **/
 
 public void startTask() {
 
 		// Create a Runnable
+		// NOTE: runTask() does the actual download
 		Runnable task = () -> runTask();
-		// Run the task in a background thread
+
+
+		// Create a thread so that the task can be executed
+		// concurrently with the Main thread
 		Thread backgroundThread = new Thread(task);
 
-		// Terminate the running thread if the application exits
+		// Signal to terminate the running background thread if the application
+		// or rather the Main thread exits
 		backgroundThread.setDaemon(true);
 
 
-		// Start the thread
+		// Everything done. Start the thread now
+		// This will have as a result the execution of method runTask()
 		backgroundThread.start();
 
 }
@@ -69,14 +81,18 @@ public void startTask() {
 
 /**
  ** Actual download of file
- ** This will execute as a separate thread
+ ** This method will be executed in a separate thread and
+ ** concurrently with the Main thread.
  **
  **/
 
 public void runTask() {
 
+      /**
+       ** Change the visual appearance of the label to indicate that
+       ** thread has started.
+       **/
       statusLbl.setTextFill(Color.web("green"));
-      //statusLbl.setFont(new Font("Arial", 18));
       statusLbl.setStyle( "-fx-font: 18px Helvetica; -fx-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, aqua 0%, red 50%);"
                           + "-fx-stroke: black;"
                           + "-fx-stroke-width: 1;");
@@ -92,7 +108,10 @@ public void runTask() {
 	      int bytesRead;
 	      //Read 1024 bytes each time
 	      while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+
 	          totalBytes = totalBytes + bytesRead;
+
+
 	          //Update label.
 	          final String labelText = "Downloaded " + totalBytes + " bytes";
 	          Platform.runLater(() -> statusLbl.setText(labelText));
@@ -109,8 +128,9 @@ public void runTask() {
 	      // handle exception by notifying the UI via the status label
 	      Platform.runLater(() -> statusLbl.setText("Error downloading resource"));
       }
-}
+
+} //runTask
 
 
 
-}
+} //ResponsiveUI
