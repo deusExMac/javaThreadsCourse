@@ -127,15 +127,22 @@ public void runTask() {
 		  BufferedInputStream in = new BufferedInputStream(new URL(targetUrl).openStream());
 	      byte dataBuffer[] = new byte[1024];
 	      int bytesRead;
-
+          Long lastCPoint = 0L; //last check point
 	      while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
 	          totalBytes = totalBytes + bytesRead;
 
 	          // This has no effect...
               statusLbl.setText("Done " + totalBytes + " bytes");
 
-              //Print a dot on the console to indicate that things are moving forward
+              //Print a dot on the console to indicate that things are moving forward.
+              //NOTE: the console does not "suffer" from the same thread issues JavaFX does.
               System.out.print(".");
+
+              //Print the progress every 10MB received to the CONSOLE.
+              if ( (totalBytes - lastCPoint) >= 1048576 ) {
+                    System.out.print("(" + totalBytes + "B)");
+                    lastCPoint = totalBytes;
+				}
 
 	      }
 	      //System.out.println(".");
