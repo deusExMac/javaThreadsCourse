@@ -1,3 +1,20 @@
+/*******
+ **
+ ** Simple example of an UI that is responsive once a time consuming
+ ** task has started.
+ **
+ ** This program downloads a linux distribution (~5.3GB) representing a time consuming task and attempts to update
+ ** some UI elements related to the progress.
+ ** The application does  use threads which allows the application to properly update status messages and respond to
+ ** mouse events.
+ **
+ ** @v0.1/tzagara/rd1105211919
+ **
+ **
+ **
+ *******/
+
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -33,6 +50,8 @@ public void start(Stage stage) {
 		startBtn.setOnAction(e -> startTask());
 		exitBtn.setOnAction(e -> stage.close());
 		HBox buttonBox = new HBox(5, startBtn, exitBtn);
+
+		//Making buttons/boxes look nicely
 		buttonBox.setStyle("-fx-padding: 10;-fx-border-style: solid outside;"
 								 + "-fx-border-width: 2;" + "-fx-border-insets: 3;"
 								 + "-fx-border-radius: 5;" + "-fx-border-color: green;");
@@ -43,6 +62,8 @@ public void start(Stage stage) {
 		stage.setTitle("Responsive UI");
 		stage.setWidth(350);
 		stage.setHeight(250);
+
+		//ok, show the UI to the user
 		stage.show();
 }
 

@@ -3,14 +3,13 @@
  ** Simple example of an UI that becomes unresponsive once a time consuming
  ** task has started.
  **
- ** This program downloads a linux distribution (~5.3GB) and attempts to update
+ ** This program downloads a linux distribution (~5.3GB) representing a time consuming task and attempts to update
  ** some UI elements related to the progress.
  ** The application does NOT use threads.
  **
- ** v0.5/tzagara/rd1105211853
+ ** @v0.1/tzagara/rd1105211853
  **
- ** PS:
- **   See Readme for more details and chagelog
+ **
  **
  *******/
 
