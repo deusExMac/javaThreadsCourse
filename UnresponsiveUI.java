@@ -82,9 +82,9 @@ public void start(Stage stage) {
 
 		//Making buttons/boxes look nicely
 		HBox buttonBox = new HBox(5, startBtn, exitBtn);
-		buttonBox.setStyle("-fx-padding: 10;-fx-border-style: solid outside;-fx-border-width: 2;-fx-border-insets: 5;-fx-border-radius: 5;-fx-border-color: #4287f5;");
-		//        + "-fx-border-width: 2;" + "-fx-border-insets: 5;"
-        //+ "-fx-border-radius: 5;" + "-fx-border-color: #4287f5;");
+		buttonBox.setStyle("-fx-padding: 10;-fx-border-style: solid outside;"
+		                 + "-fx-border-width: 2;" + "-fx-border-insets: 3;"
+                         + "-fx-border-radius: 5;" + "-fx-border-color: red;");
 
 		VBox root = new VBox(10, statusLbl, buttonBox);
 		Scene scene = new Scene(root);
