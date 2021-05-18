@@ -1,7 +1,7 @@
 # javaThreadsCourse
 
-Code examples used during the talk on Java threads (19/05/2021) at Hof University to demonstrate the usefulness of threads in the case of UI applications.
-Please forgive any omissions or bad coding practices you may encounter. Such incidents are exclusively mine. 
+Code examples used during the talk on Java threads (19/05/2021) at Hof University to demonstrate abilities of threads in Java.
+Please forgive any omissions or bad coding practices you may encounter. I'm solely to blame for such incidents and no one else. 
 
 I'm a uni professor and researcher and hence justified to write "brain-dead" code according to Linus Torvalds who said to Andrew S. Tannenbaum:
 
