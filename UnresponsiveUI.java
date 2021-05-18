@@ -42,6 +42,7 @@ import java.util.concurrent.TimeUnit;
 
 
 
+
 public class UnresponsiveUI extends Application {
 
         /**
@@ -107,11 +108,15 @@ public void runTask() {
       System.out.println("\n\n\n");
 	  long totalBytes = 0L;
 
+
+
+
 	  //Update status label
 	  // NOTE: this will not have ANY impact
       statusLbl.setText("Started download...");
 
 	  try {
+
 
           //signal that we started
 		  long startTime = System.currentTimeMillis();
@@ -129,9 +134,8 @@ public void runTask() {
 	          // This has no effect...
               statusLbl.setText("Done " + totalBytes + " bytes");
 
-
-	          //Update progress on the console (this is possible)
-	          printProgress(startTime,  targetFileSize, totalBytes);
+              //Print a dot on the console to indicate that things are moving forward
+              System.out.print(".");
 
 	      }
 	      //System.out.println(".");
@@ -141,36 +145,6 @@ public void runTask() {
       }
 }
 
-/**
- ** Prints progress, ETA ON THE CONSOLE in a fancy way
- **
- ** Disclaimer:
- ** Not my code. Got this from: https://stackoverflow.com/questions/1001290/console-based-progress-in-java
- **/
-private  void printProgress(long startTime, long total, long current) {
-    long eta = current == 0 ? 0 :
-        (total - current) * (System.currentTimeMillis() - startTime) / current;
-
-    String etaHms = current == 0 ? "N/A" :
-            String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(eta),
-                    TimeUnit.MILLISECONDS.toMinutes(eta) % TimeUnit.HOURS.toMinutes(1),
-                    TimeUnit.MILLISECONDS.toSeconds(eta) % TimeUnit.MINUTES.toSeconds(1));
-
-    StringBuilder string = new StringBuilder(140);
-    int percent = (int) (current * 100 / total);
-    string
-        .append('\r')
-        .append(String.join("", Collections.nCopies(percent == 0 ? 2 : 2 - (int) (Math.log10(percent)), " ")))
-        .append(String.format(" %d%% [", percent))
-        .append(String.join("", Collections.nCopies(percent, "=")))
-        .append('>')
-        .append(String.join("", Collections.nCopies(100 - percent, " ")))
-        .append(']')
-        .append(String.join("", Collections.nCopies(current == 0 ? (int) (Math.log10(total)) : (int) (Math.log10(total)) - (int) (Math.log10(current)), " ")))
-        .append(String.format(" %d/%d, ETA: %s", current, total, etaHms));
-
-    System.out.print(string);
-}
 
 
 
