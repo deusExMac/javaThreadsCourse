@@ -78,6 +78,9 @@ public void start(Stage stage) {
 
 public void startTask() {
 
+
+
+
 		// Create a Runnable
 		// NOTE: runTask() does the actual download
 		Runnable task = () -> runTask();
@@ -95,6 +98,11 @@ public void startTask() {
 		// Everything done. Start the thread now
 		// This will have as a result the execution of method runTask()
 		backgroundThread.start();
+
+		// Everything seems fine. Disable the start button once a download is executed.
+        // We do this to avoid starting more than one downloads of the same file - which is possible yet
+        // does not make any sense.
+		startBtn.setDisable(true);
 
 }
 
@@ -122,7 +130,7 @@ public void runTask() {
 
 	  long totalBytes = 0L;
 	  try {
-		  //5.3GB file
+		  //URL to 5.3GB file of linux distro to download
           String targetUrl = "http://ftp.halifax.rwth-aachen.de/debian-cd/current/amd64/iso-bd/debian-edu-10.9.0-amd64-BD-1.iso";
 		  BufferedInputStream in = new BufferedInputStream(new URL(targetUrl).openStream());
 	      byte dataBuffer[] = new byte[1024];
@@ -133,22 +141,28 @@ public void runTask() {
 	          totalBytes = totalBytes + bytesRead;
 
 
-	          //Update label.
-	          final String labelText = "Downloaded " + totalBytes + " bytes";
+	          //Update UI status label.
+	          final String labelText = "Downloaded " + totalBytes + " Bytes";
 	          Platform.runLater(() -> statusLbl.setText(labelText));
 
 
-              //Change label color just to show that this is possible now.
+              //Change label color just to show that this is also possible now.
 	          if ( totalBytes > 20000000)
 	               statusLbl.setTextFill(Color.web("red"));
 	          else  if ( totalBytes > 5242880)
 	                     statusLbl.setTextFill(Color.web("orange"));
-	      }
+
+	      } //while
+
+
 
 	  } catch (IOException e) {
 	      // handle exception by notifying the UI via the status label
 	      Platform.runLater(() -> statusLbl.setText("Error downloading resource"));
       }
+
+      // If download finished for any reason, tell the UI thread to enable download again.
+      Platform.runLater(() -> startBtn.setDisable(false));
 
 } //runTask
 
